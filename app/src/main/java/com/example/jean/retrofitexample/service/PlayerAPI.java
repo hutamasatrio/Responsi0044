@@ -3,6 +3,7 @@ package com.example.jean.retrofitexample.service;
 import com.example.jean.retrofitexample.model.History;
 import com.example.jean.retrofitexample.model.Player;
 import com.example.jean.retrofitexample.model.ResponseApi;
+import com.example.jean.retrofitexample.model.ResponseApi2;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -20,7 +21,7 @@ public interface PlayerAPI {
     Call<ResponseApi> getResults();
 
     @GET("history")
-    Call<History> getHistory();
+    Call<ResponseApi2> getHistory();
 
 //    @GET("bins/1bsqcn")
 //    Call<Data> getByAlpha2Code(@Path("alpha2_code") String alpha2Code);
