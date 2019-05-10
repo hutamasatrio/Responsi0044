@@ -2,6 +2,7 @@ package com.example.jean.retrofitexample.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,10 +21,9 @@ import com.example.jean.retrofitexample.model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RV_Adapter_History extends RecyclerView.Adapter<RV_Adapter_History.MyViewHolder> {
+public class RV_Adapter_History extends RecyclerView.Adapter<RV_Adapter_History.MyViewHolder>   {
 
-    private List<History> players = new ArrayList<>();
-    private List<HistoryItem> historyItem = new ArrayList<>();
+    private List<History> histories = new ArrayList<>();
     private Context mcontext;
 
     public RV_Adapter_History(Context context) {
@@ -31,7 +31,7 @@ public class RV_Adapter_History extends RecyclerView.Adapter<RV_Adapter_History.
     }
 
     public void setdata(List<History> players) {
-        this.players = players;
+        this.histories = players;
     }
 
     @NonNull
@@ -43,11 +43,12 @@ public class RV_Adapter_History extends RecyclerView.Adapter<RV_Adapter_History.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int position) {
-        final History mhistory = players.get(position);
+        final History mhistory = histories.get(position);
         myViewHolder.id.setText("Player Position  : " + mhistory.getPosisi());
         myViewHolder.nama.setText("Player Name      : " + mhistory.getNama());
         myViewHolder.umur.setText("Player Age      : " + mhistory.getAge());
         myViewHolder.team.setText("Player Age      : " + mhistory.getTeam());
+
         Glide.with(mcontext)
                 .load(mhistory.getGambar())
                 .into(myViewHolder.image);
@@ -55,27 +56,29 @@ public class RV_Adapter_History extends RecyclerView.Adapter<RV_Adapter_History.
             @Override
             public void onClick(View v) {
 
-//                final HistoryItem = historyItem.get(position);
+//                Toast toast = Toast.makeText(mcontext, mhistory.getNama()+" "+mhistory.getAge(), Toast.LENGTH_SHORT);
+//                toast.show();
+//                Intent intent = new Intent(mcontext, HistoryActivity.class);
+//                intent.putExtra("nama",mhistory.getNama());
+//                intent.putExtra("list",historyItem);
+//                intent.putParcelableArrayListExtra("history",historyItem);
+                History history = histories.get(position);
+                final ArrayList<HistoryItem> historyItem = new ArrayList<>();
+                historyItem.addAll(history.getHistory());
 
-                Toast toast = Toast.makeText(mcontext, mhistory.getNama()+" "+mhistory.getAge(), Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intent = new Intent(mcontext, HistoryActivity.class);
-                intent.putExtra("nama",mhistory.getNama());
-                intent.putParcelableArrayListExtra("nama",mhistory.getHistory());
-                mcontext.startActivity(intent);
-
+                Bundle b = new Bundle();
+                b.putParcelableArrayList("item",  historyItem);
+                Intent i = new Intent(mcontext, HistoryActivity.class);
+                i.putExtras(b);
+                mcontext.startActivity(i);
 
             }
-        })
-
-        ;
-
-
+        }) ;
     }
 
     @Override
     public int getItemCount() {
-        return players.size();
+        return histories.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

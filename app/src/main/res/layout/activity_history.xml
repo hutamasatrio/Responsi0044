@@ -20,4 +20,8 @@
         android:layout_height="30dp"
         android:id="@+id/getnama"/>
 
+   <ListView
+       android:layout_width="match_parent"
+       android:id="@+id/LV_item"
+       android:layout_height="match_parent"></ListView>
 </LinearLayout>
